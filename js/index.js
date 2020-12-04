@@ -27,7 +27,7 @@ const buscarPrecios = async (nombreCripto, monedas) => {
 
         console.log(usd);
         console.log(ars);
-        mostrarPrecios(usd, ars);
+        mostrarPrecios(ars, usd);
       });
   } catch (error) {
     console.log("Algo muuuuy malo sucedió...");
@@ -35,8 +35,8 @@ const buscarPrecios = async (nombreCripto, monedas) => {
 };
 
 const mostrarPrecios = (ars, usd) => {
-  document.getElementById("usd").textContent = usd;
   document.getElementById("ars").textContent = ars;
+  document.getElementById("usd").textContent = usd;
 };
 
 // Cuando hacemos click en el botón Actualizar
