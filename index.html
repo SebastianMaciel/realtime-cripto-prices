@@ -47,7 +47,7 @@
     </nav>
 
     <div class="container">
-      <div class="card text-center mx-auto mt-5" style="max-width: 700px">
+      <div class="card text-center mx-auto mt-3" style="max-width: 700px">
         <div class="card-header">
           <h4 class="card-title mb-0">
             <img src="./img/btc.png" class="logo" alt="btclogo" />
@@ -55,8 +55,8 @@
           </h4>
         </div>
         <div class="card-body">
-          <h1 class="display-4">$19.500 USD</h1>
-          <h1 class="font-weight-light mb-2">$1.500.000 Ars</h1>
+          <h1 class="display-4"><span id="usd"></span> USD</h1>
+          <h1 class="font-weight-light mb-2"><span id="ars"></span> Ars</h1>
           <a class="btn btn-outline-warning" id="actualizar">Actualizar</a>
         </div>
         <div class="card-footer text-muted">
@@ -65,7 +65,7 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="container pb-4">
       <div class="card text-center mx-auto mt-5" style="max-width: 700px">
         <div class="card-header">
           <h4 class="card-title mb-0">Conversor</h4>
@@ -105,6 +105,12 @@
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Accounting JS -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/accounting.js/0.4.1/accounting.min.js"
+      integrity="sha512-LW+1GKW2tt4kK180qby6ADJE0txk5/92P70Oh5YbtD7heFlC0qFFtacvSnHG4bNXmLnZq5hNb2V70r5DzS/U+g=="
       crossorigin="anonymous"
     ></script>
     <!-- Nuestro JS -->

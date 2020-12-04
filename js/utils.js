@@ -4,5 +4,7 @@ const actualizarHora = () => {
     horas = hoy.getHours(),
     minutos = hoy.getMinutes();
 
-  document.getElementById("hora").textContent = `${horas}:${minutos}`;
+  minutos < 10
+    ? (document.getElementById("hora").textContent = `${horas}:0${minutos}`)
+    : (document.getElementById("hora").textContent = `${horas}:${minutos}`);
 };
