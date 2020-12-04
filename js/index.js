@@ -1,3 +1,6 @@
+// Cuando inicia la página, actualizamos la hora actual
+actualizarHora();
+
 // Cripto a buscar
 const nombreCripto = "bitcoin";
 
@@ -25,4 +28,8 @@ const buscarPrecios = (cripto, monedas) => {
 };
 
 buscarPrecios(nombreCripto, monedas);
-// buscarPrecios(nombreCripto, moneda.pesos);
+
+// Cuando hacemos click en el botón Actualizar
+document.getElementById("actualizar").addEventListener("click", () => {
+  actualizarHora();
+});
