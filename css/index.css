@@ -5,3 +5,11 @@ body {
 .nav-text {
   color: #e09c48;
 }
+
+.logo {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin-bottom: 3px;
+  margin-right: 5px;
+}
