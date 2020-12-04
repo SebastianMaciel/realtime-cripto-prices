@@ -22,6 +22,8 @@
       rel="stylesheet"
     />
 
+    <link rel="shortcut icon" href="./favicon.ico" />
+
     <!-- Nuestro CSS -->
     <link rel="stylesheet" href="./css/index.css" />
 
@@ -54,10 +56,12 @@
         </div>
         <div class="card-body">
           <h1 class="display-4">$19.500 USD</h1>
-          <h1 class="font-weight-light">$1.500.000 Ars</h1>
-          <a class="btn btn-outline-warning btn-lg mt-2 mb-1">Actualizar</a>
+          <h1 class="font-weight-light mb-2">$1.500.000 Ars</h1>
+          <a class="btn btn-outline-warning" id="actualizar">Actualizar</a>
         </div>
-        <div class="card-footer text-muted">Actualizado: 11:21 PM</div>
+        <div class="card-footer text-muted">
+          Actualizado: <span id="hora"></span>
+        </div>
       </div>
     </div>
 
@@ -67,8 +71,8 @@
           <h4 class="card-title mb-0">Conversor</h4>
         </div>
         <div class="card-body">
-          <a class="btn btn-outline-warning btn-lg mt-2 mb-1 mr-4">A Bitcoin</a>
-          <a class="btn btn-outline-warning btn-lg mt-2 mb-1">A Pesos</a>
+          <a class="btn btn-outline-warning mt-2 mb-1 mr-4">A Bitcoin</a>
+          <a class="btn btn-outline-warning mt-2 mb-1">A Pesos</a>
           <!-- <p class="card-text"> -->
           <div class="input-group mx-auto mt-4" style="max-width: 300px">
             <!-- <div class="input-group-prepend">
@@ -104,6 +108,7 @@
       crossorigin="anonymous"
     ></script>
     <!-- Nuestro JS -->
+    <script src="./js/utils.js"></script>
     <script src="./js/index.js"></script>
   </body>
 </html>
