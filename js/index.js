@@ -2,15 +2,15 @@
 const nombreCripto = "bitcoin";
 
 // Lista de monedas
-const moneda = {
+const monedas = {
   dolares: "usd",
   pesos: "ars",
 };
 
 // Esta función simplifica la búsqueda de criptos y conversión a divisas.
 // Apunta a que mañana pueda ser utilizada para buscar otros datos
-const buscarPrecios = (cripto, moneda) => {
-  const url = `https://api.coingecko.com/api/v3/simple/price?ids=${cripto}&vs_currencies=${moneda}`;
+const buscarPrecios = (cripto, monedas) => {
+  const url = `https://api.coingecko.com/api/v3/simple/price?ids=${cripto}&vs_currencies=${monedas.dolares},${monedas.pesos}`;
 
   fetch(url)
     .then((datosEnBruto) => datosEnBruto.json())
@@ -18,11 +18,11 @@ const buscarPrecios = (cripto, moneda) => {
       // Desestructuramos todo el json que vino de la api
       let precio = ({} = datosJSON);
 
-      const numeros = precio[cripto][moneda];
+      const numeros = precio[cripto][monedas];
 
-      console.log(numeros);
+      console.log(precio[cripto]);
     });
 };
 
-buscarPrecios(nombreCripto, moneda.dolares);
-buscarPrecios(nombreCripto, moneda.pesos);
+buscarPrecios(nombreCripto, monedas);
+// buscarPrecios(nombreCripto, moneda.pesos);
