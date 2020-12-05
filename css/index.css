@@ -10,6 +10,10 @@ body {
   margin-bottom: 3px;
 }
 
+.nombreCripto {
+  text-transform: capitalize;
+}
+
 .nav-text {
   color: #e09c48;
 }
@@ -20,6 +24,15 @@ body {
   height: 30px;
   margin-bottom: 3px;
   margin-right: 5px;
+}
+
+.botones-cripto {
+  display: flex;
+  justify-content: center;
+}
+
+.buscarPrecio {
+  margin: 0px 10px;
 }
 
 .btn-bitcoin,

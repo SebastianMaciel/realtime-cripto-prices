@@ -42,12 +42,17 @@
 
     <!-- Panel de Precio de Bitcoin - Dólares/Pesos -->
     <div class="container">
+      <div class="botones-cripto">
+        <button class="btn btn-warning btn-lg buscarPrecio" data-id="bitcoin">BTC</button>
+        <button class="btn btn-outline-warning btn-lg buscarPrecio" data-id="ethereum">ETH</button>
+        <button class="btn btn-outline-warning btn-lg buscarPrecio" data-id="dai">DAI</button>
+      </div>
       <div class="card text-center mx-auto mt-3" style="max-width: 700px">
         <!-- Ícono y Título -->
         <div class="card-header">
           <h4 class="card-title mb-0">
             <img src="./img/btc.png" class="logo" alt="btclogo" />
-            Bitcoin
+            <span id="nombreCripto" class="nombreCripto">Bitcoin</span>
           </h4>
         </div>
         <!-- Precios en Dólares y Pesos -->
@@ -58,7 +63,7 @@
           <a class="btn btn-outline-warning mt-2" id="actualizar">Actualizar</a>
         </div>
         <!-- Última hora de actualización -->
-        <div class="card-footer text-muted">Actualizado: <span id="hora"></span></div>
+        <div class="card-footer text-muted">Actualizado: <span id="horaActualizacion"></span></div>
       </div>
     </div>
 
