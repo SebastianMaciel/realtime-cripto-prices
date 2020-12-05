@@ -1,21 +1,29 @@
 // =======================================================================================
 // Setup inicial!
-// Seteamos el nomobre de la criptomoneda a buscar:
+// Los botones indican qué cripto queremos buscar:
 // =======================================================================================
-const botonesPrecio = document.querySelectorAll(".buscarPrecio");
+const botonesCripto = document.querySelectorAll(".buscarPrecio"); // Listamos los botones BTC, ETH y DAI
 
-botonesPrecio.forEach(function (boton) {
+botonesCripto.forEach((boton) => {
   boton.addEventListener("click", (e) => {
-    const cripto = e.target.dataset.id; // en el botón está el dato que nos interesa
-    document.getElementById("nombreCripto").textContent = cripto; // Nombre del cripto
+    const cripto = e.target.dataset.id; // Sacamos el nombre de la cripto de data-id del botón
+    document.getElementById("nombreCripto").textContent = cripto; // Cambiamos el nombre del cripto
+
+    // Buscamos todos los botones, y los desactivamos visualmente
+    botonesCripto.forEach(function (botonesNoActivos) {
+      botonesNoActivos.classList.remove("btn-warning");
+      botonesNoActivos.classList.add("btn-outline-warning");
+    });
+
+    e.target.classList.remove("btn-outline-warning"); // Sacamos el estilo inactivo
+    e.target.classList.add("btn-warning"); ///////////// Le damos el estilo de activo
+
     // Falta cambiar loguito...
     // document.getElementById("logoCripto").textContent = cripto;
     // Actualizamos...
     actualizarPrecios(cripto, divisas);
   });
 });
-
-// const cripto = "bitcoin";
 
 // =======================================================================================
 // Hacemos una lista de monedas - Por el momento nos interesan pesos y dólares

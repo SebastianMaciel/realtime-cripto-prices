@@ -9,25 +9,27 @@ const actualizarPrecios = async (cripto, divisas) => {
     fetch(url)
       .then((datosEnBruto) => datosEnBruto.json()) // Convertimos a Json
       .then((precio) => {
-        const bitcoinEnDolares = precio[cripto][divisas.dolares]; // Esto sería: precio.bitcoin.usd
-        const bitcoinEnPesos = precio[cripto][divisas.pesos]; //                 precio.bitcoin.ars
+        const criptoEnDolares = precio[cripto][divisas.dolares]; // Valor en: precio.bitcoin.usd
+        const criptoEnPesos = precio[cripto][divisas.pesos]; ////// Valor en: precio.bitcoin.ars
 
-        const dolares = accounting.formatMoney(bitcoinEnDolares, "$", 0, ".", ","); // 18905,22 -> $18.905
-        const pesos = accounting.formatMoney(bitcoinEnPesos, "$", 0, ".", ","); //     15031000 -> $1.503.100
+        const dolares = accounting.formatMoney(criptoEnDolares, "$", 0, ".", ","); // 18905,22 -> $18.905
+        const pesos = accounting.formatMoney(criptoEnPesos, "$", 0, ".", ","); ////// 15031000 -> $1.503.100
 
         actualizarPanel(dolares, pesos); // Mandamos los precios
         actualizarHora(); //////////////// Actualizamos la hora
       });
   } catch (error) {
     console.log("Algo muuuuy malo sucedió..."); // Log de error
+    console.log("Error:" + error); // Log de error
   }
 };
+
 // =======================================================================================
 // Seleccionar los elementos en el HTML y mostrarlos al usuario:
 // =======================================================================================
 const actualizarPanel = (dolares, pesos) => {
-  document.getElementById("usd").textContent = dolares;
-  document.getElementById("ars").textContent = pesos;
+  document.getElementById("usdEnPanel").textContent = dolares;
+  document.getElementById("arsEnPanel").textContent = pesos;
 };
 
 // =======================================================================================
@@ -57,7 +59,7 @@ window.onload = () => {
 // =======================================================================================
 // =======================================================================================
 
-// Funciones con explicación completa:
+// Función con explicación completa:
 
 // Recibe la critomoneda a buscar y la lista de divisas a convertir
 // const actualizarPrecios = async (cripto, divisas) => {
