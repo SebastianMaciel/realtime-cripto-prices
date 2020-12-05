@@ -1,20 +1,14 @@
-/*
+// Setup inicial!
+// ==============
+// Queremos que la web cargue los datos por lo menos una vez.
+// Después, con el botón actualizar hacemos lo mismo cada vez que queramos.
 
-Setup inicial!
-==============
-
-Queremos que la web cargue los datos por lo menos una vez.
-
-Después, con el botón actualizar hacemos lo mismo cada vez que queramos.
-
-*/
-
-// Seteamos el nomobre de la criptomoneda a buscar
+// Seteamos el nomobre de la criptomoneda a buscar:
 const nombreCripto = "bitcoin";
 
 // Hacemos una lista de monedas - Por el momento nos interesan pesos y dólares
 // Estos valores realmente se envían como argumentos a una función
-// Que se encarga de separar estos valores para enviarlos a la api de consulta
+// que se encarga de separar estos valores para enviarlos a la api de consulta
 const divisas = {
   dolares: "usd",
   pesos: "ars",

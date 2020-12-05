@@ -5,6 +5,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
+    <!-- Favicon -->
+    <link rel="icon" href="./favicon.svg" type="image/png" />
+
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -13,20 +16,21 @@
       crossorigin="anonymous"
     />
 
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap"
       rel="stylesheet"
     />
 
-    <link rel="shortcut icon" href="./favicon.ico" />
-
     <!-- Nuestro CSS -->
     <link rel="stylesheet" href="./css/index.css" />
 
+    <!-- Título de la pestaña -->
     <title>Cripto API!</title>
   </head>
   <body>
+    <!-- Nav Bar -->
     <nav class="navbar navbar-light">
       <div class="container">
         <a class="navbar-brand" href="">
@@ -36,34 +40,44 @@
       </div>
     </nav>
 
+    <!-- Panel de Precio de Bitcoin - Dólares/Pesos -->
     <div class="container">
       <div class="card text-center mx-auto mt-3" style="max-width: 700px">
+        <!-- Ícono y Título -->
         <div class="card-header">
           <h4 class="card-title mb-0">
             <img src="./img/btc.png" class="logo" alt="btclogo" />
             Bitcoin
           </h4>
         </div>
+        <!-- Precios en Dólares y Pesos -->
         <div class="card-body">
           <h1 class="display-4"><span id="usd"></span> USD</h1>
           <h1 class="font-weight-light mb-2"><span id="ars"></span> Ars</h1>
-          <a class="btn btn-outline-warning" id="actualizar">Actualizar</a>
+          <!-- Botón para Actualizar Precios -->
+          <a class="btn btn-outline-warning mt-2" id="actualizar">Actualizar</a>
         </div>
+        <!-- Última hora de actualización -->
         <div class="card-footer text-muted">Actualizado: <span id="hora"></span></div>
       </div>
     </div>
 
+    <!-- Panel de conversión de precios -->
     <div class="container pb-4">
       <div class="card text-center mx-auto mt-5" style="max-width: 700px">
+        <!-- Título -->
         <div class="card-header">
           <h4 class="card-title mb-0">Conversor</h4>
         </div>
+        <!-- Botones para elegir tipo de conversión -->
         <div class="card-body">
           <a class="btn btn-warning btn-bitcoin" id="conversorBitcoin"> A Bitcoin</a>
           <a class="btn btn-outline-warning btn-pesos" id="conversorPesos">A Pesos</a>
+          <!-- Input para el usuario -->
           <div class="input-group mx-auto mt-4" style="max-width: 300px">
             <input type="text" class="form-control form-control-lg" id="precioUsuario" />
           </div>
+          <!-- Resultado para el usuario -->
           <h4 class="mt-3"><span id="unidadConversion">Bitcoins:</span></h4>
         </div>
       </div>
@@ -88,6 +102,7 @@
     ></script>
     <!-- Nuestros JS -->
     <script src="./js/utils.js"></script>
+    <script src="./js/conversor.js"></script>
     <script src="./js/index.js"></script>
   </body>
 </html>
