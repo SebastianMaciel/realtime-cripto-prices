@@ -4,9 +4,12 @@
 // =======================================================================================
 const botonesCripto = document.querySelectorAll(".buscarPrecio"); // Listamos los botones BTC, ETH y DAI
 
+let criptoActivo = "bitcoin"; // Por defecto
+
 botonesCripto.forEach((boton) => {
   boton.addEventListener("click", (e) => {
     const cripto = e.target.dataset.id; // Sacamos el nombre de la cripto de data-id del botón
+    criptoActivo = cripto; // Seteamos el botón activo (para el botón actualizar)
     document.getElementById("nombreCripto").textContent = cripto; // Cambiamos el nombre del cripto
 
     // Buscamos todos los botones, y los desactivamos visualmente
@@ -36,6 +39,6 @@ const divisas = {
 // =======================================================================================
 // Cuando hacemos click en el botón Actualizar
 // =======================================================================================
-// document.getElementById("actualizar").addEventListener("click", () => {
-//   actualizarPrecios(cripto, divisas); // Volvemos a ejecutar la búsqueda de precios
-// });
+document.getElementById("actualizar").addEventListener("click", () => {
+  actualizarPrecios(criptoActivo, divisas); // Volvemos a ejecutar la búsqueda de precios
+});
