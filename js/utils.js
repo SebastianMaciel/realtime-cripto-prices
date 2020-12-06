@@ -2,6 +2,9 @@
 // Esta función es la principal, hace la búsqueda de criptos y conversión a divisas.
 // Los argumentos son el nombre del cripto a buscar, y las divisas que queremos:
 // =======================================================================================
+
+let criptoActivo = "bitcoin"; // Por defecto
+
 const actualizarPrecios = async (cripto, divisas) => {
   const url = `https://api.coingecko.com/api/v3/simple/price?ids=${cripto}&vs_currencies=${divisas.dolares},${divisas.pesos}`;
 
@@ -15,12 +18,13 @@ const actualizarPrecios = async (cripto, divisas) => {
         const dolares = accounting.formatMoney(criptoEnDolares, "$", 0, ".", ","); // 18905,22 -> $18.905
         const pesos = accounting.formatMoney(criptoEnPesos, "$", 0, ".", ","); ////// 15031000 -> $1.503.100
 
-        actualizarPanel(dolares, pesos); // Mandamos los precios
-        actualizarHora(); //////////////// Actualizamos la hora
+        actualizarPanel(dolares, pesos); ////////////// Mandamos los precios
+        actualizarConversor(cripto, dolares, pesos); // Seteamos el conversor
+        actualizarHora(); ///////////////////////////// Actualizamos la hora
       });
   } catch (error) {
     console.log("Algo muuuuy malo sucedió..."); // Log de error
-    console.log("Error:" + error); // Log de error
+    console.log(`Error: ${error}`);
   }
 };
 
@@ -30,6 +34,15 @@ const actualizarPrecios = async (cripto, divisas) => {
 const actualizarPanel = (dolares, pesos) => {
   document.getElementById("usdEnPanel").textContent = dolares;
   document.getElementById("arsEnPanel").textContent = pesos;
+};
+
+// =======================================================================================
+// Seleccionar los elementos en el HTML y mostrarlos al usuario:
+// =======================================================================================
+const actualizarConversor = (cripto, dolares, pesos) => {
+  document.getElementById("criptoAPesos").textContent = `${cripto}`;
+  document.getElementById("pesosACripto").textContent = `${cripto}`;
+  document.getElementById("unidadConversion").textContent = `${cripto}:`;
 };
 
 // =======================================================================================

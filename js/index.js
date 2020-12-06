@@ -4,8 +4,6 @@
 // =======================================================================================
 const botonesCripto = document.querySelectorAll(".buscarPrecio"); // Listamos los botones BTC, ETH y DAI
 
-let criptoActivo = "bitcoin"; // Por defecto
-
 botonesCripto.forEach((boton) => {
   boton.addEventListener("click", (e) => {
     const cripto = e.target.dataset.id; // Sacamos el nombre de la cripto de data-id del botón
@@ -22,7 +20,7 @@ botonesCripto.forEach((boton) => {
     e.target.classList.add("btn-warning"); ///////////// Le damos el estilo de activo
 
     // Falta cambiar loguito...
-    // document.getElementById("logoCripto").textContent = cripto;
+    document.getElementById("criptoLogo").src = `./img/${cripto}.png`;
     // Actualizamos...
     actualizarPrecios(cripto, divisas);
   });
