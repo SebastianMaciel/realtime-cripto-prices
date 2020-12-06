@@ -16,9 +16,11 @@ botonesCripto.forEach((boton) => {
       botonesNoActivos.classList.add("btn-outline-warning");
     });
 
-    e.target.classList.remove("btn-outline-warning"); /////////////////// Sacamos el estilo inactivo
-    e.target.classList.add("btn-warning"); ////////////////////////////// Le damos el estilo de activo
-    document.getElementById("criptoLogo").src = `./img/${cripto}.png`; // Cambiamos el logo
+    e.target.classList.remove("btn-outline-warning"); // Sacamos el estilo inactivo
+    e.target.classList.add("btn-warning"); ///////////// Le damos el estilo de activo
+
+    // Falta cambiar loguito...
+    document.getElementById("criptoLogo").src = `./img/${cripto}.png`;
     // Actualizamos...
     actualizarPrecios(cripto, divisas);
   });

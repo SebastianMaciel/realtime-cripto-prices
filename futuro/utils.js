@@ -19,6 +19,7 @@ const actualizarPrecios = async (cripto, divisas) => {
         const pesos = accounting.formatMoney(criptoEnPesos, "", 0, ".", ","); ////// 15031000 -> $1.503.100
 
         actualizarPanel(dolares, pesos); ////////////// Mandamos los precios
+        actualizarConversor(cripto, dolares, pesos); // Seteamos el conversor
         actualizarHora(); ///////////////////////////// Actualizamos la hora
       });
   } catch (error) {
@@ -33,6 +34,15 @@ const actualizarPrecios = async (cripto, divisas) => {
 const actualizarPanel = (dolares, pesos) => {
   document.getElementById("usdEnPanel").textContent = dolares;
   document.getElementById("arsEnPanel").textContent = pesos;
+};
+
+// =======================================================================================
+// Seleccionar los elementos en el HTML y mostrarlos al usuario:
+// =======================================================================================
+const actualizarConversor = (cripto, dolares, pesos) => {
+  document.getElementById("criptoAPesos").textContent = `${cripto}`;
+  document.getElementById("pesosACripto").textContent = `${cripto}`;
+  document.getElementById("unidadConversion").textContent = `${cripto}:`;
 };
 
 // =======================================================================================
