@@ -4,6 +4,7 @@
 //
 //    1 - Crear una interfaz en HTML simple con Bootstrap
 //    2 - Vamos a editar algunos detalles con CSS
+//    3 - En el HTML, vamos a marcar algunos elementos para actualizarlos desde el index.js
 //    3 - Planteamos hacer una llamada a una api para que nos devuelva la info que queremos
 //    4 - Los datos que nos devuelve la api, los vamos a formatear para que se vean bien
 //    5 - Esos datos vamos a tener que ponerlos en el panel del usuario
@@ -18,8 +19,8 @@
 
 // Por ahora, nos interesan los precios en dólares y en pesos
 const divisas = {
-  dolares: "usd",
-  pesos: "ars",
+  dolares: "usd", // El formato 'usd' es el que realmente se va a usar en la llamada a la API
+  pesos: "ars", //// Le vamos a llamar 'dolares' o 'pesos', así se nos hace más intuitivo saber qué es
 };
 
 // Como opción de cripto activo inicial, usamos bitcoin
@@ -33,79 +34,78 @@ let criptoActivo = "bitcoin"; // Por defecto
 // El querySelectorAll, nos va a devolver un array de elementos html en este caso, los de BTC, ETH y DAI
 const botonesCripto = document.querySelectorAll(".buscarPrecio"); // Ej: botonesCripto[0] nos trae el botón de BTC
 
-const mostrarPreciosEnPanel = (event) => {
-  // El 'event' tiene la propiedad 'data-id' que nos interesa
-  // Lo vamos a sacar de cada botón, por ej el botón BTC tiene el data-id 'bitcoin'
-  const cripto = event.target.dataset.id;
-
-  // Vamos a setear globlamente el cripto que se encuentra activo
-  // Sobre todo, lo vamos a usar para el botón 'Actualizar' más adelante
-  criptoActivo = cripto;
-
-  // Vamos a seleccionar el título del panel, y ponerle el nombre del cripto que elegimos con el botón
-  document.getElementById("tituloCriptoDelPanel").textContent = cripto;
-
-  // Los logos de los criptos están en la carpeta 'img'
-  // Cada imagen tiene el mismo nombre del cripto que elegimos, así es más práctico cambiarla
-  // Elegimos el elemento, y le vamos a cambiar el 'src':
-  document.getElementById("criptoLogo").src = `./img/${cripto}.png`;
-
-  // Ahora, vamos a buscar todos los botones, y los desactivamos visualmente
-  // Incluso el nuestro
-  deshabilitaVisualmenteTodosLosBotones();
-
-  // Vamos a volver a activar visualmente este botón en particular
-  // Le vamos a tener que pasar el 'event' de este botón para que funcione la activación
-  habilitarVisualmenteEsteBoton(event);
-
-  // Ahora si, pasamos la actualización importante...
-  buscarPreciosEnAPI(cripto, divisas);
-};
-
 // Necesitamos recorrer el array de botones
 // Y a cada botón, cuando le hagamos click,
 // Le vamos a mandar la función que hace varias actualizaciones en el panel
+// Y sobre todo, va a enviar información a la API para la búsqueda real:
 botonesCripto.forEach((boton) => {
-  boton.addEventListener("click", (event) => mostrarPreciosEnPanel(event));
-});
+  boton.addEventListener("click", (event) => {
+    // El 'event' tiene la propiedad 'data-id' que nos interesa
+    // Lo vamos a sacar de cada botón del HTML, por ej el botón BTC tiene el data-id 'bitcoin'
+    const cripto = event.target.dataset.id;
 
-const habilitarVisualmenteEsteBoton = (event) => {
-  event.target.classList.remove("btn-outline-warning"); /////////////////// Sacamos el estilo inactivo
-  event.target.classList.add("btn-warning"); ////////////////////////////// Le damos el estilo de activo
-};
+    // Vamos a setear globlamente el cripto que se encuentra activo
+    // Sobre todo, lo vamos a usar para el botón 'Actualizar' más adelante
+    criptoActivo = cripto;
 
-const deshabilitaVisualmenteTodosLosBotones = () => {
-  botonesCripto.forEach(function (botonesNoActivos) {
-    botonesNoActivos.classList.remove("btn-warning");
-    botonesNoActivos.classList.add("btn-outline-warning");
+    // Vamos a seleccionar el título del panel, y ponerle el nombre del cripto que elegimos con el botón
+    document.getElementById("tituloCriptoDelPanel").textContent = cripto;
+
+    // Los logos de los criptos están en la carpeta 'img'
+    // Cada imagen tiene el mismo nombre del cripto que elegimos, así es más práctico cambiarla
+    // Elegimos el elemento, y le vamos a cambiar el 'src':
+    document.getElementById("criptoLogo").src = `./img/${cripto}.png`; // Ej: "./img/bitcoin.png"
+
+    // Ahora, vamos a buscar todos los botones, y los desactivamos visualmente
+    // Incluso el nuestro (después lo habilitamos en las siguientes líneas)
+    botonesCripto.forEach(function (botonesNoActivos) {
+      botonesNoActivos.classList.remove("btn-warning"); /////// Sacamos el estilo de activo
+      botonesNoActivos.classList.add("btn-outline-warning"); // Ponemos el estilo de inactivo
+    });
+
+    // Vamos a volver a activar visualmente este botón en particular
+    // Le indicamos el 'event' asì entiende que queremos activar este botón específicamente
+    event.target.classList.remove("btn-outline-warning"); // Sacamos el estilo inactivo
+    event.target.classList.add("btn-warning"); ///////////// Le damos el estilo de activo
+
+    // Vamos a pasar a esta función los valores del cripto que nos interesa y la lista de divisas
+    // La explicación completa se encuentra comentada en esa función:
+    buscarPreciosEnAPI(cripto, divisas);
   });
-};
+});
 
 // ===================================================================================================
 // Esta función es la principal, hace la búsqueda de criptos y conversión a divisas.
 // Los argumentos son el nombre del cripto a buscar, y las divisas que queremos:
 // ===================================================================================================
 
-// Recibe la critomoneda a buscar y la lista de divisas a convertir
+// Cuando hacemos clic en algún botón de cripto, por ej: BTC,
+// Vamos a ejecutar esta función, la cual va a recibir 'bitcoin' como valor de cripto
+// Y la lista de divisas que nos interesa para la consulta:
 const buscarPreciosEnAPI = async (cripto, divisas) => {
   // Enviamos a la api el nombre de la criptomoneda "bitcoin" en el query "ids".
   // El último query "vs_currencies" le pedimos dólares y pesos como "usd" y "ars"
+  // Nota: podemos pedir varias criptos y varias divisas, todo separado por comas, por ej: ids
   const url = `https://api.coingecko.com/api/v3/simple/price?ids=${cripto}&vs_currencies=${divisas.dolares},${divisas.pesos}`;
 
-  // Hacemos la búsqueda
+  // Usamos el bloque try/catch
+  // Para búsqueda asincrónica y manejo de errores
   try {
     // Con fetch, vamos a enviar la consulta a la url que definimos arriba
-    fetch(url)
+    await fetch(url)
       // Necesitamos convertir esa respuesta a Json, así la podemos manipular:
       .then((datosEnBruto) => datosEnBruto.json())
       // Ahora si, vamos a desmenuzar el precio de ese Json...
       .then((precio) => {
-        // El Json de precio viene como un objeto:
+        // 'precio' va a tener dentro un objeto:
         //
         // bitcoin: {
         //    ars: 1527266,
         //    usd: 18703.22
         // }
+
+        // Para las siguientes líneas, recordemos que cripto es 'bitcoin' que enviamos desde el botón
+        // Y divisas es un objeto en el setup inicial, por lo que 'divisas.dolares' es igual a 'usd.
 
         // Del objeto, separamos el valor de cripto a dólares:
         const criptoEnDolares = precio[cripto][divisas.dolares]; // Estamos pidiendo dinámicamente: precio.bitcoin.usd
@@ -113,104 +113,56 @@ const buscarPreciosEnAPI = async (cripto, divisas) => {
         const criptoEnPesos = precio[cripto][divisas.pesos]; ////// Acá pedimos: precio.bitcoin.ars
 
         // El problema es que los datos vienen en bruto, por ej: 1534100
-        // Nosotros vamos a usar la librería accountingJs para ver: $1.534.100
-        const dolares = accounting.formatMoney(criptoEnDolares, "", 0, ".", ","); // 18905,22 -> $18.905
-        const pesos = accounting.formatMoney(criptoEnPesos, "", 0, ".", ","); ////// 15031000 -> $1.503.100
+        // Nosotros vamos a usar la librería accountingJs para ver: 1.534.100
+        const dolares = accounting.formatMoney(criptoEnDolares, "", 0, ".", ","); // 18905,22 -> 18.905
+        const pesos = accounting.formatMoney(criptoEnPesos, "", 0, ".", ","); ////// 15031000 -> 1.503.100
 
-        actualizarPanel(dolares, pesos); ////////////// Mandamos los precios
-        actualizarHora(); ///////////////////////////// Actualizamos la hora
+        // Ya teniendo los precios, vamos a actualizar los elementos del panel,
+        // Seleccionamos los elementos del HTML y le cambiamos el contenido:
+        document.getElementById("usdEnPanel").textContent = dolares;
+        document.getElementById("arsEnPanel").textContent = pesos;
+
+        actualizarHora(); // Actualizamos la hora
       });
   } catch (error) {
-    console.log("Algo muuuuy malo sucedió..."); // Log de error
+    // Si algo malo pasa, como que no se encuentre disponible la información desde la API
+    // Vamos a avisar al usuario que no se pudo actualizar, en la parte de última hora de actualización
+    document.getElementById("horaActualizacion").textContent = "No se pudo actualizar...";
+    // Logueamos por consola el error para información extra que pueda ayudarnos:
     console.log(`Error: ${error}`);
   }
-};
-
-// =======================================================================================
-// Seleccionar los elementos en el HTML y mostrarlos al usuario:
-// =======================================================================================
-const actualizarPanel = (dolares, pesos) => {
-  document.getElementById("usdEnPanel").textContent = dolares;
-  document.getElementById("arsEnPanel").textContent = pesos;
 };
 
 // =======================================================================================
 // Formateamos fecha y hora y los enviamos al usuario
 // =======================================================================================
 const actualizarHora = () => {
+  // Vamos a tomar la hora y minutos de la fecha actual:
   const horas = new Date().getHours(); ////// Hora
   const minutos = new Date().getMinutes(); // Minutos
 
-  minutos < 10 // Agregamos un cero cuando los minutos son del 0 al 9.
-    ? (document.getElementById("horaActualizacion").textContent = `${horas}:0${minutos}`) // 12:3 -> 12:03
-    : (document.getElementById("horaActualizacion").textContent = `${horas}:${minutos}`);
+  // Este condicional es necesario para arreglar cómo se muestran los minutos
+  // Hacemos que el minuto del 0 al 9, se le anteponga el '0' así queda por ej '12:05' en vez de '12:5'
+  // Básicamente: Si los minutos son menores a 10, en template string agregale el '0', si no, mandamos los minutos tal cual
+  const horaFormateada = minutos < 10 ? `${horas}:0${minutos}` : `${horas}:${minutos}`;
+
+  // Finalmente, elegimos el elemento del HTML y enviamos la hora bien formateada
+  document.getElementById("horaActualizacion").textContent = `Actualizado a las ${horaFormateada}`;
 };
 
 // =======================================================================================
-// Cuando hacemos click en el botón Actualizar
+// Cuando hacemos click en el botón Actualizar...
 // =======================================================================================
 document.getElementById("actualizar").addEventListener("click", () => {
-  buscarPreciosEnAPI(criptoActivo, divisas); // Volvemos a ejecutar la búsqueda de precios
+  // Vamos a tener que cuenta que criptoActivo por default es 'bitcoin'
+  // Ese valor va a depender del botón de cripto que tengamos activo
+  // Volvemos a ejecutar la búsqueda de precios
+  buscarPreciosEnAPI(criptoActivo, divisas);
 });
 
 // =======================================================================================
-// Queremos que la web cargue los datos por lo menos una vez.
+// Queremos que la web cargue los datos por lo menos una vez:
 // =======================================================================================
 window.onload = () => {
-  buscarPreciosEnAPI("bitcoin", divisas);
+  buscarPreciosEnAPI(criptoActivo, divisas);
 };
-
-// =======================================================================================
-// =======================================================================================
-// =======================================================================================
-// =======================================================================================
-// =======================================================================================
-// =======================================================================================
-// =======================================================================================
-
-// Funciones con explicación completa:
-
-// Recibe la critomoneda a buscar y la lista de divisas a convertir
-// const actualizarPrecios = async (cripto, divisas) => {
-//   // Enviamos a la api el nombre de la criptomoneda "bitcoin" en el query "ids".
-//   // El último query "vs_currencies" le pedimos dólares y pesos como "usd" y "ars"
-//   const url = `https://api.coingecko.com/api/v3/simple/price?ids=${cripto}&vs_currencies=${divisas.dolares},${divisas.pesos}`;
-
-//   // Hacemos la búsqueda
-//   try {
-//     // Con fetch enviamos la url que definimos arriba
-//     fetch(url)
-//       // Necesitamos convertir esa respuesta a Json, así la podemos manipular:
-//       .then((datosEnBruto) => datosEnBruto.json())
-//       // Ahora si, ese Json lo vamos a desmenuzar...
-//       .then((datosEnJSON) => {
-//         // Desestructuramos todo lo que json contiene...
-//         let precio = ({} = datosEnJSON);
-
-//         // El Json viene como
-//         //
-//         // bitcoin: {
-//         //    ars: 1527266,
-//         //    usd: 18703.22
-//         // }
-
-//         // Del objeto, separamos el valor de bitcoin a dólares:
-//         const bitcoinDolares = precio[cripto][divisas.dolares]; // Que es lo mismo que pedir precio.bitcoin.usd
-//         // Y también el valor del bitcoin en pesos:
-//         const bitcoinPesos = precio[cripto][divisas.pesos]; // Acá pedimos precio.bitcoin.ars
-
-//         // El problema es que los datos vienen en bruto, por ej: 1534100
-//         // Nosotros vamos a usar la librería accountingJs para ver: $1.534.100
-//         const usd = accounting.formatMoney(bitcoinDolares, "$", 0, ".", ","); // Le decimos que queremos el símbolo $
-//         const ars = accounting.formatMoney(bitcoinPesos, "$", 0, ".", ","); // Y que queremos los separadores de miles con un punto, sin decimales.
-
-//         // Vamos a enviar esos valores ya formateados
-//         // A la función que realmente se encarga de mostrarlos al usuario
-//         mostrarPrecios(ars, usd);
-//       });
-//     // Por el momento, si algo salió mal, mostramos por consola el mensaje...
-//     // Se puede enviar un alert, un modal, o algo similar para avisar al usuario.
-//   } catch (error) {
-//     console.log("Algo muuuuy malo sucedió...");
-//   }
-// };
