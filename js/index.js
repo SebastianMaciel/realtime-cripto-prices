@@ -1,21 +1,27 @@
-// ==================================================================================================
+// ================================================================================================================
 //
 //  Lo que queremos hacer es:
 //
 //    1 - Crear una interfaz en HTML simple con Bootstrap
 //    2 - Vamos a editar algunos detalles con CSS
 //    3 - En el HTML, vamos a marcar algunos elementos para actualizarlos desde el index.js
-//    3 - Planteamos hacer una llamada a una api para que nos devuelva la info que queremos
-//    4 - Los datos que nos devuelve la api, los vamos a formatear para que se vean bien
-//    5 - Esos datos vamos a tener que ponerlos en el panel del usuario
-//    6 - Vamos a darle funcionalidad a los botones de criptos
-//    7 - Cuando toquemos los botones, volvemos a hacer la llamada a la api así actualizamos los datos
+//    4 - Planteamos hacer una llamada a una api para que nos devuelva la info que queremos
+//    5 - Vamos a setear algunos valores de entrada, así se nos facilita usar la api
+//    6 - Los botones de cripto, van a pedir precios a la api, y actualizar todo en el panel HTML
+//    7 - Vamos a tener un botón de actualizar para volver a pedir precios según qué botón de cripto tenemos activo
+//    8 - En cada llamada, vamos a crear una función para actualizar la hora
 //
-// ===================================================================================================
+//  Tenemos que tener en cuenta que:
+//
+//    - Los datos que nos devuelve la api, los vamos a formatear para que se vean bien con AccountingJS
+//    - La hora en Vanilla Javascript no es ideal, por lo que hay un mínimo reformateo para los minutos
+//
+// ================================================================================================================
 
-// =======================================================================================
+// ===================================================================================================
 // Setup Inicial -> Divisas y Cripto por defecto
-// =======================================================================================
+// Por el momento
+// ===================================================================================================
 
 // Por ahora, nos interesan los precios en dólares y en pesos
 const divisas = {
@@ -24,8 +30,12 @@ const divisas = {
 };
 
 // Como opción de cripto activo inicial, usamos bitcoin
-// Esto se va a usar en el botón actualizar más adelante...
+// Esto se va a usar principalmente para el botón actualizar más adelante...
 let criptoActivo = "bitcoin"; // Por defecto
+
+// ===================================================================================================
+// Comienzo de la aplicación
+// ===================================================================================================
 
 // ===================================================================================================
 // Los botones indican qué cripto queremos buscar:
@@ -34,10 +44,14 @@ let criptoActivo = "bitcoin"; // Por defecto
 // El querySelectorAll, nos va a devolver un array de elementos html en este caso, los de BTC, ETH y DAI
 const botonesCripto = document.querySelectorAll(".buscarPrecio"); // Ej: botonesCripto[0] nos trae el botón de BTC
 
+// ===================================================================================================
+// Le vamos a dar acciones a todos los  botones de cripto
+// ===================================================================================================
 // Necesitamos recorrer el array de botones
 // Y a cada botón, cuando le hagamos click,
 // Le vamos a mandar la función que hace varias actualizaciones en el panel
 // Y sobre todo, va a enviar información a la API para la búsqueda real:
+// ===================================================================================================
 botonesCripto.forEach((boton) => {
   boton.addEventListener("click", (event) => {
     // El 'event' tiene la propiedad 'data-id' que nos interesa
@@ -122,7 +136,9 @@ const buscarPreciosEnAPI = async (cripto, divisas) => {
         document.getElementById("usdEnPanel").textContent = dolares;
         document.getElementById("arsEnPanel").textContent = pesos;
 
-        actualizarHora(); // Actualizamos la hora
+        // Vamos a actualizar la hora en que obtubimos los precios
+
+        actualizarHora();
       });
   } catch (error) {
     // Si algo malo pasa, como que no se encuentre disponible la información desde la API
@@ -135,6 +151,9 @@ const buscarPreciosEnAPI = async (cripto, divisas) => {
 
 // =======================================================================================
 // Formateamos fecha y hora y los enviamos al usuario
+// =======================================================================================
+// Hacemos esta función por separado,
+// Porque la usamos con los botones de cripto, y con el botón actualizar
 // =======================================================================================
 const actualizarHora = () => {
   // Vamos a tomar la hora y minutos de la fecha actual:
@@ -153,9 +172,10 @@ const actualizarHora = () => {
 // =======================================================================================
 // Cuando hacemos click en el botón Actualizar...
 // =======================================================================================
+// Vamos a tener que cuenta que criptoActivo por default es 'bitcoin'
+// Ese valor va a depender del botón de cripto que tengamos activo
+// =======================================================================================
 document.getElementById("actualizar").addEventListener("click", () => {
-  // Vamos a tener que cuenta que criptoActivo por default es 'bitcoin'
-  // Ese valor va a depender del botón de cripto que tengamos activo
   // Volvemos a ejecutar la búsqueda de precios
   buscarPreciosEnAPI(criptoActivo, divisas);
 });
