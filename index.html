@@ -39,24 +39,43 @@
 
     <div class="container">
       <!-- Botones de Opción de Cripto -->
+      <!-- De acá vamos a sacar los datos para enviar a la api -->
+      <!-- Vamos a seleccionar todos estos botones con la clase 'buscarPrecio' -->
+      <!-- Escondemos en 'data-id' el valor real que vamos a mandar directamente a la consulta de la api -->
+      <!-- Ej: tocamos el botón BTC, la función en javascript va a encontrar el 'data-id' que dice 'bitcoin, y lo manda a la consulta. -->
       <div class="botones-cripto">
         <button class="btn btn-warning btn-lg buscarPrecio" data-id="bitcoin">BTC</button>
         <button class="btn btn-outline-warning btn-lg buscarPrecio" data-id="ethereum">ETH</button>
         <button class="btn btn-outline-warning btn-lg buscarPrecio" data-id="dai">DAI</button>
       </div>
+
+      <!--                                            -->
       <!-- Panel de Precio de Bitcoin - Dólares/Pesos -->
+      <!--                                            -->
       <div class="card text-center mx-auto mt-4" style="max-width: 700px">
         <!-- Ícono y Título -->
         <div class="card-header">
           <h4 class="card-title mb-0">
+            <!-- En este 'img', vamos a cambiar dinámicamente con javascript el 'src' donde se encuentra la imagen -->
+            <!-- Esta imagen va a cambiar dependiendo de qué botón toquemos, por ejemplo BTC, va a poner la imagen de ./img/bitcoin.png -->
+            <!-- Vamos a cambiar este 'src' accediendo con su id 'criptoLogo' -->
             <img src="./img/bitcoin.png" class="cripto-logo" alt="Logo Cripto" id="criptoLogo" />
-            <span id="nombreCripto" class="nombreCripto">Bitcoin</span>
+
+            <!-- El contenido de este span tiene el título del cripto -->
+            <!-- Lo vamos a cambiar dinámicamente al tocar algún botón de cripto -->
+            <span id="tituloCriptoDelPanel" class="nombreCripto">Bitcoin</span>
           </h4>
         </div>
         <!-- Precios en Dólares y Pesos -->
         <div class="card-body">
+          <!-- El valor del cripto en dólares lo vamos a inyectar desde el javascript -->
+
+          <!-- Acá vamos a formatear '$' 'valor del cripto' 'USD' -->
           <h1 class="display-4">$<span id="usdEnPanel"></span> USD</h1>
+
+          <!-- Acá vamos a formatear '$' 'valor del cripto' 'Ars' -->
           <h1 class="font-weight-light mb-2">$<span id="arsEnPanel"></span> Ars</h1>
+
           <!-- Botón para Actualizar Precios -->
           <a class="btn btn-outline-warning mt-2" id="actualizar">Actualizar</a>
         </div>
@@ -83,7 +102,7 @@
       crossorigin="anonymous"
     ></script>
     <!-- Nuestros JS -->
-    <script src="./js/utils.js"></script>
+    <!-- <script src="./js/utils.js"></script> -->
     <script src="./js/index.js"></script>
   </body>
 </html>

@@ -1,23 +1,33 @@
 const inputUsuario = document.querySelector("#precioUsuario");
 const resultadoUsuario = document.getElementById("resultadoConversion");
 
-inputUsuario.addEventListener("keyup", conversion);
+const monedas = {
+  dolares: "usd",
+  pesos: "ars",
+};
 
-function conversion(e) {
-  const url = `https://api.coingecko.com/api/v3/simple/price?ids=dai&vs_currencies=ars`;
+inputUsuario.addEventListener("onChange", conversion("bitcoin", monedas));
+
+function conversion(cripto, monedas) {
+  const url = `https://api.coingecko.com/api/v3/simple/price?ids=${cripto}&vs_currencies=${monedas.dolares},${monedas.pesos}`;
+
+  console.log("ok");
+
   try {
     fetch(url)
       .then((datosEnBruto) => datosEnBruto.json()) // Convertimos a Json
-      .then((valor) => {
-        const unidadBase = Number(valor.dai.ars.toFixed(0));
+      .then((precio) => {
+        const criptoEnDolares = precio[cripto][monedas.dolares]; // Valor en: precio.bitcoin.usd
+        const criptoEnPesos = precio[cripto][monedas.pesos]; ////// Valor en: precio.bitcoin.ars
 
-        const aMultiplicaPorPesos = document.getElementById("arsEnPanel").textContent;
+        // Conversión:
+        let result = inputUsuario.value * criptoEnDolares;
 
-        const totalConversion = Number(e.target.value) * Number(aMultiplicaPorPesos);
-
-        console.log(totalConversion);
-
-        resultadoUsuario.textContent = totalConversion;
+        console.log(inputUsuario.value);
+        // const unidadBase = Number(valor.dai.ars.toFixed(0));
+        // const aMultiplicaPorPesos = document.getElementById("arsEnPanel").textContent;
+        // const totalConversion = Number(e.target.value) * Number(aMultiplicaPorPesos);
+        // resultadoUsuario.textContent = totalConversion;
         // const criptoEnDolares = precio[cripto][divisas.dolares]; // Valor en: precio.bitcoin.usd
         // const criptoEnPesos = precio[cripto][divisas.pesos]; ////// Valor en: precio.bitcoin.ars
       });

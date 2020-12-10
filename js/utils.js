@@ -1,4 +1,12 @@
 // =======================================================================================
+// Hacemos una lista de monedas - Por el momento nos interesan pesos y dólares
+// =======================================================================================
+// const divisas = {
+//   dolares: "usd",
+//   pesos: "ars",
+// };
+
+// =======================================================================================
 // Esta función es la principal, hace la búsqueda de criptos y conversión a divisas.
 // Los argumentos son el nombre del cripto a buscar, y las divisas que queremos:
 // =======================================================================================
@@ -15,8 +23,11 @@ const actualizarPrecios = async (cripto, divisas) => {
         const criptoEnDolares = precio[cripto][divisas.dolares]; // Valor en: precio.bitcoin.usd
         const criptoEnPesos = precio[cripto][divisas.pesos]; ////// Valor en: precio.bitcoin.ars
 
-        const dolares = accounting.formatMoney(criptoEnDolares, "", 0, ".", ","); // 18905,22 -> $18.905
-        const pesos = accounting.formatMoney(criptoEnPesos, "", 0, ".", ","); ////// 15031000 -> $1.503.100
+        // Nos va a pasar que los valores son poco amigables para el usuario
+        // La API nos va a devolver por ejemplo: 15031000 -> $1.503.100
+        // Acá vamos a usar AccountingJS para formatear bien los valores de las monedas:
+        const dolares = accounting.formatMoney(criptoEnDolares, "", 0, ".", ","); // Le decimos que queremos el símbolo $
+        const pesos = accounting.formatMoney(criptoEnPesos, "", 0, ".", ","); ////// Y que queremos los separadores de miles con un punto, sin decimales.
 
         actualizarPanel(dolares, pesos); ////////////// Mandamos los precios
         actualizarHora(); ///////////////////////////// Actualizamos la hora
