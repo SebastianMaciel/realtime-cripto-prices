@@ -16,6 +16,15 @@
 //    - Los datos que nos devuelve la api, los vamos a formatear para que se vean bien con AccountingJS
 //    - La hora en Vanilla Javascript no es ideal, por lo que hay un mínimo reformateo para los minutos
 //
+//  Próximas funcionalidades:
+//
+//    - Agregar o eliminar dinámicamente qué criptos queremos tener disponibles para consulta
+//      · La función de la api ya está preparada para esto, tenemos que hacer otra llamada así buscamos más criptos.
+//    - Poder ver precio según Dólar Blue
+//      · Necesitamos otra api, o posiblemente implementar web scraping en dolarhoy.com para contar con ese valor
+//    - Diseñar un conversor de precios cripto a pesos y viceversa.
+//      · Nivel de dificultad más avanzado, pero totalmente diseñable
+//
 // ================================================================================================================
 
 // ===================================================================================================
