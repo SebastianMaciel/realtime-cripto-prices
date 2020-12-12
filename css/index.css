@@ -1,7 +1,9 @@
+/* De manera global ponemos esta fuente */
 body {
   font-family: "Open Sans", sans-serif;
 }
 
+/* El logo de la app que se encuentra en el Nav Bar */
 .btc-logo {
   display: inline-block;
   width: 30px;
@@ -10,14 +12,17 @@ body {
   margin-bottom: 3px;
 }
 
-.nombreCripto {
+/* Vamos a capitalizar el título que enviamos desde index.js */
+.tituloCriptoDelPanel {
   text-transform: capitalize;
 }
 
+/* El color de fuente de 'CRIPTO API' */
 .nav-text {
   color: #e09c48;
 }
 
+/* Ponemos cierto tamaño y posición del logo */
 .cripto-logo {
   display: inline-block;
   width: 30px;
@@ -26,21 +31,14 @@ body {
   margin-right: 5px;
 }
 
-.botones-cripto {
+/* Queremos que los botones estén siempre centrados */
+.contenedor-botones-cripto {
   display: flex;
   justify-content: center;
 }
 
+/* Esta clase se usa en el index.js para seleccionar todos los botones */
+/* Le damos un margen horizontal para acomodar el texto interior */
 .buscarPrecio {
   margin: 0px 10px;
-}
-
-.btn-bitcoin,
-.btn-pesos {
-  margin-top: 2px;
-  margin-bottom: 1px;
-}
-
-.btn-bitcoin {
-  margin-right: 4px;
 }
