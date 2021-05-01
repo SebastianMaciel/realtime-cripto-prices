@@ -35,10 +35,6 @@ body {
 .contenedor-botones-cripto {
   display: flex;
   justify-content: center;
-}
-
-/* Esta clase se usa en el index.js para seleccionar todos los botones */
-/* Le damos un margen horizontal para acomodar el texto interior */
-.buscarPrecio {
-  margin: 0px 10px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
